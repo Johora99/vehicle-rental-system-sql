@@ -38,7 +38,7 @@ The Vehicle Rental System is a simplified database application designed to manag
 ### Query 1: JOIN – Retrieve booking information with customer name and vehicle name
 
 ```
-select b.booking_id, u.name, v.vehicle_name, b.start_date, b.end_date, b.booking_status from bookings as b
+select b.booking_id, u.name as customer_name, v.name as vehicle_name, b.start_date, b.end_date, b.status from bookings as b
 inner join users as u on u.user_id = b.user_id
 inner join vehicles as v on v.vehicle_id = b.vehicle_id;
 
@@ -56,7 +56,7 @@ where not exists (
   select 1
   from bookings b
   where b.vehicle_id = v.vehicle_id 
-) and v.available_status <> 'rented';
+);
 
 ```
 **Explanation:**
@@ -68,7 +68,7 @@ where not exists (
 
 ``` 
 select * from vehicles 
-where vehicle_type = 'bike' and available_status = 'available';
+where type = 'bike' and status = 'available';
 
 ```
 **Explanation:**
@@ -79,9 +79,11 @@ where vehicle_type = 'bike' and available_status = 'available';
 ### Query 4: GROUP BY & HAVING – Vehicles with more than 2 bookings
 
 ```
-select vehicle_name, count(*) as total_bookings from vehicles as v 
-inner join bookings as b on v.vehicle_id = b.vehicle_id 
-group by vehicle_name having count(*) > 2;
+select v.name as vehicle_name, count(b.booking_id) as total_bookings
+from vehicles v
+inner join bookings b on v.vehicle_id = b.vehicle_id
+group by v.vehicle_id, v.name
+having count(b.booking_id) > 2;
 
 ```
 **Explanation:**

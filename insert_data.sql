@@ -12,7 +12,7 @@ insert into users (name, email, phone, password, role) values
 
 
 insert into vehicles 
-(vehicle_name, vehicle_type, model, registration_number, rental_price, available_status)
+(name, type, model, registration_number, rental_price, status)
 values
 ('Toyota Corolla', 'car', '2022', 'DHA-1234', 4500.00, 'available'),
 ('Honda Civic', 'car', '2021', 'DHA-2345', 5000.00, 'rented'),
@@ -32,7 +32,7 @@ values
 
 
 insert into bookings
-(user_id, vehicle_id, start_date, end_date, booking_status, total_cost)
+(user_id, vehicle_id, start_date, end_date, status, total_cost)
 values
 (2, 1, '2025-01-01', '2025-01-05', 'confirmed', 18000.00),
 (4, 1, '2025-02-05', '2025-02-08', 'completed', 18000.00),

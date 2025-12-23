@@ -1,5 +1,5 @@
 create database "Vehicle Rental System";
-create type user_role AS ENUM ('Admin', 'Customer');
+create type user_role as enum ('Admin', 'Customer');
 
 create table users (
   user_id serial primary key not null,
@@ -14,12 +14,12 @@ create type vehicle_type as enum ('car', 'bike', 'truck');
 create type available_type as enum ('available', 'rented', 'maintenance');
 create table vehicles (
   vehicle_id serial primary key not null,
-  vehicle_name varchar(100) not null,
-  vehicle_type vehicle_type not null,
+  name varchar(100) not null,
+  type vehicle_type not null,
   model varchar(50) not null,
   registration_number varchar(20) not null unique,
-  rental_price numeric(10, 2) not null,
-  available_status available_type not null
+  rental_price int check (rental_price > 0) not null,
+  status available_type not null
 );
 
 
@@ -30,7 +30,7 @@ create table bookings (
   vehicle_id int references vehicles (vehicle_id) not null,
   start_date Date not null,
   end_date Date not null,
-  booking_status booking_type not null,
-  total_cost numeric(10, 2) check (total_cost > 0) not null,
+  status booking_type not null,
+  total_cost int check (total_cost > 0) not null,
   check (end_date > start_date)
   );
